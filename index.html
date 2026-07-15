@@ -1,0 +1,421 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="主动权益基金研究样本库：基金画像、标签与研究进度。" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>主动权益基金研究库</title>
+    <style>
+/* GitHub Pages 静态站点样式 */
+:root {
+  --ink: #122235;
+  --muted: #67788b;
+  --line: #dce5ea;
+  --paper: #f4f7f5;
+  --white: #ffffff;
+  --navy: #102c45;
+  --teal: #0a7c78;
+  --teal-soft: #dff2ee;
+  --gold: #c69a4b;
+  --shadow: 0 18px 50px rgba(18, 43, 64, 0.09);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 92% 3%, rgba(68, 157, 146, 0.14), transparent 24rem),
+    var(--paper);
+  font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+}
+a { color: inherit; text-decoration: none; }
+button, input, select { font: inherit; }
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 74px;
+  padding: 0 5vw;
+  border-bottom: 1px solid rgba(220, 229, 234, 0.85);
+  background: rgba(244, 247, 245, 0.88);
+  backdrop-filter: blur(18px);
+}
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand-mark {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  color: white;
+  border-radius: 11px;
+  background: var(--navy);
+  font-family: Georgia, serif;
+  font-size: 19px;
+}
+.brand strong, .brand small { display: block; }
+.brand strong { letter-spacing: 0.04em; }
+.brand small { margin-top: 2px; color: var(--muted); font-size: 10px; letter-spacing: 0.11em; }
+nav { display: flex; gap: 28px; color: #435568; font-size: 14px; }
+nav a:hover { color: var(--teal); }
+
+.section-shell { width: min(1180px, 90vw); margin-inline: auto; }
+.hero {
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: 56px;
+  align-items: center;
+  min-height: 590px;
+  padding-block: 72px 46px;
+}
+.eyebrow {
+  margin: 0 0 12px;
+  color: var(--teal);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+h1 { max-width: 650px; margin: 0; font-family: Georgia, "Songti SC", serif; font-size: clamp(46px, 5.6vw, 76px); line-height: 1.08; letter-spacing: -0.04em; }
+.hero-text { max-width: 620px; margin: 28px 0; color: #516477; font-size: 18px; line-height: 1.85; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.button { display: inline-flex; min-height: 46px; align-items: center; padding: 0 21px; border-radius: 8px; font-size: 14px; font-weight: 650; }
+.button-primary { color: white; background: var(--navy); box-shadow: 0 12px 26px rgba(16, 44, 69, 0.18); }
+.button-secondary { border: 1px solid var(--line); background: rgba(255,255,255,0.7); }
+
+.hero-panel { padding: 25px; border: 1px solid rgba(255,255,255,0.7); border-radius: 20px; background: rgba(255,255,255,0.72); box-shadow: var(--shadow); }
+.panel-topline { display: flex; justify-content: space-between; margin-bottom: 18px; color: var(--muted); font-size: 12px; }
+.live-dot::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 7px; border-radius: 50%; background: #22a06b; box-shadow: 0 0 0 5px rgba(34,160,107,0.12); }
+.metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.metric-card { min-height: 145px; padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--white); }
+.metric-card span, .metric-card small { display: block; color: var(--muted); font-size: 12px; }
+.metric-card strong { display: block; margin: 18px 0 10px; color: var(--navy); font-family: Georgia, serif; font-size: 31px; }
+.metric-card.accent { color: white; border-color: transparent; background: var(--teal); }
+.metric-card.accent span, .metric-card.accent small, .metric-card.accent strong { color: white; }
+
+.research-strip { display: grid; grid-template-columns: repeat(4, 1fr); border-block: 1px solid var(--line); }
+.research-strip span { padding: 18px; color: #536679; text-align: center; font-size: 13px; letter-spacing: 0.08em; }
+.research-strip span + span { border-left: 1px solid var(--line); }
+.section-block { padding-block: 100px; }
+.section-heading { display: flex; align-items: end; justify-content: space-between; gap: 36px; margin-bottom: 34px; }
+.section-heading h2, .notes-card h2 { margin: 0; font-family: Georgia, "Songti SC", serif; font-size: clamp(30px, 4vw, 46px); letter-spacing: -0.03em; }
+.section-heading > p { max-width: 520px; margin: 0; color: var(--muted); line-height: 1.75; }
+
+.toolbar { display: flex; gap: 12px; margin-bottom: 22px; }
+.search-box { flex: 1; }
+.search-box input, select { width: 100%; min-height: 47px; border: 1px solid var(--line); border-radius: 9px; outline: none; background: rgba(255,255,255,0.76); }
+.search-box input { padding: 0 16px; }
+select { width: 190px; padding: 0 14px; color: #435568; }
+.search-box input:focus, select:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(10,124,120,0.1); }
+
+.fund-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.fund-card { position: relative; min-height: 250px; padding: 22px; overflow: hidden; border: 1px solid var(--line); border-radius: 15px; background: rgba(255,255,255,0.78); transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+.fund-card:hover { transform: translateY(-4px); border-color: #b6cfcc; box-shadow: var(--shadow); }
+.fund-card.active { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(10,124,120,0.08); }
+.fund-card::after { content: ""; position: absolute; right: -35px; bottom: -35px; width: 110px; height: 110px; border-radius: 50%; background: rgba(10,124,120,0.07); }
+.card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.fund-code { color: var(--teal); font-size: 12px; font-weight: 700; letter-spacing: .08em; }
+.status-pill { padding: 5px 9px; color: #7a5b19; border: 1px solid #ead8ad; border-radius: 999px; background: #fff7e4; font-size: 11px; }
+.fund-card h3 { min-height: 57px; margin: 24px 0 12px; font-size: 21px; line-height: 1.4; }
+.fund-card > p { min-height: 48px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+.tag-row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 19px; }
+.tag { padding: 5px 9px; border-radius: 6px; color: #356360; background: var(--teal-soft); font-size: 11px; }
+.card-action { position: relative; z-index: 1; width: 100%; margin-top: 22px; padding: 0; color: var(--navy); border: 0; background: none; text-align: left; font-weight: 650; cursor: pointer; }
+.card-action::after { content: "→"; float: right; }
+
+.detail-shell { margin-top: -58px; }
+.fund-detail { min-height: 110px; border-radius: 18px; background: var(--navy); color: white; box-shadow: var(--shadow); }
+.detail-content { padding: 31px; }
+.detail-header { display: flex; align-items: start; justify-content: space-between; gap: 28px; }
+.detail-header p { margin: 7px 0 0; color: #aac0d0; }
+.detail-header h3 { margin: 0; font-size: 24px; }
+.detail-close { padding: 7px 11px; color: #d5e2ea; border: 1px solid rgba(255,255,255,.18); border-radius: 7px; background: transparent; cursor: pointer; }
+.detail-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 34px; margin-top: 26px; }
+.detail-grid h4 { margin: 0 0 14px; color: #b6cbd9; font-size: 12px; letter-spacing: .1em; }
+.task-list { display: grid; gap: 10px; }
+.task-item { display: flex; justify-content: space-between; gap: 18px; padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,.1); font-size: 13px; }
+.task-item span:last-child { color: #f0c977; }
+.detail-note { margin: 0; color: #d6e1e8; line-height: 1.8; }
+.empty-state { margin: 0; padding: 42px; color: #b9cad6; text-align: center; }
+
+.framework-grid { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
+.framework-grid article { min-height: 200px; padding: 24px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: rgba(255,255,255,.48); }
+.framework-grid span { color: var(--gold); font-family: Georgia, serif; font-size: 13px; }
+.framework-grid h3 { margin: 35px 0 10px; font-size: 18px; }
+.framework-grid p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+
+.notes-card { display: grid; grid-template-columns: .8fr 1.2fr; gap: 70px; margin-bottom: 100px; padding: 45px; border: 1px solid #cfe1dd; border-radius: 20px; background: linear-gradient(135deg, #edf8f5, #f8fbfa); }
+.notes-card ul { display: grid; gap: 13px; margin: 0; padding-left: 20px; color: #4f6473; line-height: 1.7; }
+footer { display: flex; justify-content: space-between; padding: 24px 5vw; color: #7b8a98; border-top: 1px solid var(--line); font-size: 12px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+@media (max-width: 900px) {
+  nav { display: none; }
+  .hero { grid-template-columns: 1fr; gap: 36px; min-height: auto; }
+  .fund-grid { grid-template-columns: 1fr 1fr; }
+  .framework-grid { grid-template-columns: 1fr 1fr; }
+  .section-heading { align-items: start; flex-direction: column; }
+}
+
+@media (max-width: 620px) {
+  .site-header { min-height: 66px; }
+  .brand strong { font-size: 14px; }
+  .hero { padding-top: 52px; }
+  h1 { font-size: 43px; }
+  .hero-text { font-size: 16px; }
+  .metric-grid, .fund-grid, .detail-grid, .notes-card { grid-template-columns: 1fr; }
+  .research-strip { grid-template-columns: 1fr 1fr; }
+  .research-strip span:nth-child(3) { border-left: 0; border-top: 1px solid var(--line); }
+  .research-strip span:nth-child(4) { border-top: 1px solid var(--line); }
+  .toolbar { flex-direction: column; }
+  select { width: 100%; }
+  .framework-grid { grid-template-columns: 1fr; }
+  .notes-card { gap: 28px; padding: 28px; }
+  footer { gap: 8px; flex-direction: column; }
+}
+
+</style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="返回首页">
+        <span class="brand-mark">研</span>
+        <span>
+          <strong>主动权益基金研究库</strong>
+          <small>Active Equity Fund Lab</small>
+        </span>
+      </a>
+      <nav aria-label="主导航">
+        <a href="#samples">研究样本</a>
+        <a href="#framework">研究框架</a>
+        <a href="#notes">数据说明</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section-shell">
+        <div class="hero-copy">
+          <p class="eyebrow">RESEARCH WORKSPACE · V0.1</p>
+          <h1>先看清基金，再评价基金。</h1>
+          <p class="hero-text">
+            用可追溯的数据和统一标签，回答基金是什么、怎样赚钱、风险来自哪里，以及能力是否具有持续性。
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#samples">查看首批样本</a>
+            <a class="button button-secondary" href="#framework">了解研究框架</a>
+          </div>
+        </div>
+        <div class="hero-panel" aria-label="研究进度摘要">
+          <div class="panel-topline">
+            <span>样本库概况</span>
+            <span class="live-dot">持续建设</span>
+          </div>
+          <div class="metric-grid">
+            <div class="metric-card">
+              <span>首批基金</span>
+              <strong id="fund-count">3</strong>
+              <small>研究样本</small>
+            </div>
+            <div class="metric-card">
+              <span>画像维度</span>
+              <strong>8</strong>
+              <small>统一框架</small>
+            </div>
+            <div class="metric-card">
+              <span>数据状态</span>
+              <strong>V0</strong>
+              <small>待接入Choice</small>
+            </div>
+            <div class="metric-card accent">
+              <span>当前重点</span>
+              <strong>验证</strong>
+              <small>口径与质量</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-shell research-strip" aria-label="研究原则">
+        <span>时点可得</span>
+        <span>口径统一</span>
+        <span>结果可解释</span>
+        <span>过程可复现</span>
+      </section>
+
+      <section id="samples" class="section-shell section-block">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">FIRST RESEARCH COHORT</p>
+            <h2>首批研究样本</h2>
+          </div>
+          <p>目前只展示基金名称可以确认的信息。风格和策略标签均为研究线索，尚未替代数据验证。</p>
+        </div>
+
+        <div class="toolbar">
+          <label class="search-box">
+            <span class="sr-only">搜索基金</span>
+            <input id="fund-search" type="search" placeholder="搜索基金名称或代码" autocomplete="off" />
+          </label>
+          <select id="fund-filter" aria-label="按产品名称类型筛选">
+            <option value="all">全部样本</option>
+            <option value="混合">混合型名称</option>
+            <option value="股票">股票型名称</option>
+          </select>
+        </div>
+
+        <div id="fund-grid" class="fund-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="section-shell detail-shell" aria-live="polite">
+        <div id="fund-detail" class="fund-detail">
+          <p class="empty-state">点击一只基金，查看研究任务和待补充数据。</p>
+        </div>
+      </section>
+
+      <section id="framework" class="section-shell section-block">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">RESEARCH FRAMEWORK</p>
+            <h2>八维基金画像</h2>
+          </div>
+          <p>不急于给单一总分，先把收益来源、风险和投资方法拆开呈现。</p>
+        </div>
+        <div class="framework-grid">
+          <article><span>01</span><h3>产品定位</h3><p>类型、投资范围、基准、费率、规模与开放状态。</p></article>
+          <article><span>02</span><h3>收益能力</h3><p>绝对收益、同类超额、基准超额与滚动Alpha。</p></article>
+          <article><span>03</span><h3>风险特征</h3><p>波动、最大回撤、下行风险与回撤修复。</p></article>
+          <article><span>04</span><h3>风格画像</h3><p>市值、价值成长、质量、动量与行业暴露。</p></article>
+          <article><span>05</span><h3>持仓操作</h3><p>集中度、换手率、重仓稳定度与主动权重。</p></article>
+          <article><span>06</span><h3>经理能力</h3><p>任职区间、跨产品一致性与规模扩张影响。</p></article>
+          <article><span>07</span><h3>环境适应</h3><p>牛熊、价值成长、大小盘等市场状态表现。</p></article>
+          <article><span>08</span><h3>可投资性</h3><p>容量、申赎限制、费用、拥挤与组合适配。</p></article>
+        </div>
+      </section>
+
+      <section id="notes" class="section-shell notes-card">
+        <div>
+          <p class="eyebrow">DATA NOTE</p>
+          <h2>当前版本的数据边界</h2>
+        </div>
+        <ul>
+          <li>标签只用于研究记录，不构成基金评级或投资建议。</li>
+          <li>基金分类、经理、规模、净值和持仓仍需通过Choice数据逐项验证。</li>
+          <li>网站不存放Choice账号、API密钥或未经授权的原始付费数据。</li>
+          <li>后续所有历史研究按公告日与可得日期对齐，避免前视偏差。</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>主动权益基金研究库 · 研究原型</p>
+      <p>更新日期：<span id="update-date">2026-07-15</span></p>
+    </footer>
+
+    <script>
+const grid = document.querySelector("#fund-grid");
+const detail = document.querySelector("#fund-detail");
+const search = document.querySelector("#fund-search");
+const filter = document.querySelector("#fund-filter");
+
+let funds = [];
+let selectedId = null;
+
+function fundCard(fund) {
+  const active = fund.id === selectedId ? " active" : "";
+  return `
+    <article class="fund-card${active}" data-fund-id="${fund.id}">
+      <div class="card-top">
+        <span class="fund-code">${fund.code}</span>
+        <span class="status-pill">${fund.status}</span>
+      </div>
+      <h3>${fund.name}</h3>
+      <p>${fund.summary}</p>
+      <div class="tag-row">${fund.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")}</div>
+      <button class="card-action" type="button" data-action="open" data-fund-id="${fund.id}">查看研究任务</button>
+    </article>
+  `;
+}
+
+function renderFunds() {
+  const keyword = search.value.trim().toLowerCase();
+  const category = filter.value;
+  const visible = funds.filter((fund) => {
+    const matchesKeyword = `${fund.name} ${fund.code}`.toLowerCase().includes(keyword);
+    const matchesCategory = category === "all" || fund.name.includes(category);
+    return matchesKeyword && matchesCategory;
+  });
+
+  grid.innerHTML = visible.length
+    ? visible.map(fundCard).join("")
+    : '<p class="empty-state">没有找到匹配的基金。</p>';
+}
+
+function renderDetail(fund) {
+  detail.innerHTML = `
+    <div class="detail-content">
+      <div class="detail-header">
+        <div>
+          <h3>${fund.name}</h3>
+          <p>${fund.code} · ${fund.category}</p>
+        </div>
+        <button class="detail-close" type="button" data-action="close">关闭</button>
+      </div>
+      <div class="detail-grid">
+        <div>
+          <h4>下一步研究任务</h4>
+          <div class="task-list">
+            ${fund.tasks.map((task) => `<div class="task-item"><span>${task.name}</span><span>${task.state}</span></div>`).join("")}
+          </div>
+        </div>
+        <div>
+          <h4>标签说明</h4>
+          <p class="detail-note">${fund.note}</p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+grid.addEventListener("click", (event) => {
+  const button = event.target.closest('[data-action="open"]');
+  if (!button) return;
+  selectedId = button.dataset.fundId;
+  const fund = funds.find((item) => item.id === selectedId);
+  renderFunds();
+  renderDetail(fund);
+  detail.scrollIntoView({ behavior: "smooth", block: "center" });
+});
+
+detail.addEventListener("click", (event) => {
+  if (!event.target.closest('[data-action="close"]')) return;
+  selectedId = null;
+  detail.innerHTML = '<p class="empty-state">点击一只基金，查看研究任务和待补充数据。</p>';
+  renderFunds();
+});
+
+search.addEventListener("input", renderFunds);
+filter.addEventListener("change", renderFunds);
+
+fetch("funds.json")
+  .then((response) => {
+    if (!response.ok) throw new Error(`基金数据加载失败：${response.status}`);
+    return response.json();
+  })
+  .then((data) => {
+    funds = data.funds;
+    document.querySelector("#fund-count").textContent = String(funds.length);
+    document.querySelector("#update-date").textContent = data.updatedAt;
+    renderFunds();
+  })
+  .catch((error) => {
+    grid.innerHTML = `<p class="empty-state">${error.message}</p>`;
+  });
+
+</script>
+  </body>
+</html>
